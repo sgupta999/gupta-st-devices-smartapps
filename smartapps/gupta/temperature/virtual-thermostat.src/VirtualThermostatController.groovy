@@ -25,30 +25,28 @@ definition(
     description: "Thermostat Interface to Control Heating and Cooling device(s) in conjunction with any temperature and humidity sensor(s).",
     category: "Green Living",
     iconUrl:  "https://github.com/sgupta999/GuptaSmartthingsRepository/raw/master/icons/thermostat.jpg",
-	parent: "gupta:Virtual Thermostat Manager",
+    iconX2Url:  "https://github.com/sgupta999/GuptaSmartthingsRepository/raw/master/icons/thermostat.jpg",
+	parent: "gupta/temperature:Virtual Thermostat Manager",
 )
 
 preferences {	
-	page (name: "install", uninstall: 'true') {
-		section("Choose Temperature & Humidity sensor(s)\nAvg will be used for multiple sensors", hideWhenEmpty: true){
-			input "sensors", "capability.temperatureMeasurement", title: "Temperature Sensor(s)", multiple: true
-			input "humidity", "capability.relativeHumidityMeasurement", title: "Humidity Sensor(s)", required: false, multiple: true
-			input "contact", "capability.contactSensor", title: "Must be closed to heat/cool", required: false
-		}	
-		section("Select Heating / Cooling outlet(s)\n")  {
-			input "control", "bool", title: "Exclusive Control", required: false, defaultValue: 'false'
-			input "heaters", "capability.switch", title: "Heating Outlet(s)", required: false, multiple: true
-			paragraph "Exclusive Outlet(s) control - for manual on / off reverts  back to thermostat state"
-			input "coolers", "capability.switch", title: "Cooling Outlet(s)", required: false, multiple: true
-		}
-		section("Operating Parameters") {
-			input(name: "units", type: "enum", options: [["F":"Fahrenheit(°F)"],["C":"Centigrade(°C)"]], 
-				 title: "Units (°C / °F)", required: true, multiple: false, defaultValue: "F")
-			paragraph "Maintain heating/cooling within this amount from set temp"
-			input "variance", "decimal", title: "Threshold", required: false, defaultValue: 1
-			input "emergencySetpoint", "decimal", title: "Emergency Temperature to maintain", required: false, defaultValue: '50'
-		}
-		remove("Delete Thermostat", "Are you sure?", "This will delete the Thermostat. Cannot be undone.")
+	section("Choose Temperature & Humidity sensor(s)\nAvg will be used for multiple sensors", hideWhenEmpty: true){
+		input "sensors", "capability.temperatureMeasurement", title: "Temperature Sensor(s)", multiple: true
+		input "humidity", "capability.relativeHumidityMeasurement", title: "Humidity Sensor(s)", required: false, multiple: true
+		input "contact", "capability.contactSensor", title: "Must be closed to heat/cool", required: false
+	}	
+	section("Select Heating / Cooling outlet(s)\n")  {
+		paragraph "Exclusive Outlet(s) control - for manual on / off reverts  back to thermostat state"
+		input "control", "bool", title: "Exclusive Control", required: false, defaultValue: 'false'
+		input "heaters", "capability.switch", title: "Heating Outlet(s)", required: false, multiple: true
+		input "coolers", "capability.switch", title: "Cooling Outlet(s)", required: false, multiple: true
+	}
+	section("Operating Parameters") {
+		input(name: "units", type: "enum", options: [["F":"Fahrenheit(°F)"],["C":"Centigrade(°C)"]], 
+			 title: "Units (°C / °F)", required: true, multiple: false, defaultValue: "F")
+		paragraph "Maintain heating/cooling within this amount from set temp"
+		input "variance", "decimal", title: "Threshold", required: false, defaultValue: 1
+		input "emergencySetpoint", "decimal", title: "Emergency Temperature to maintain", required: false, defaultValue: '50'
 	}
 }
 
@@ -70,7 +68,7 @@ def createDevice() {
 	app.updateLabel(label+" Controller")
     log.debug "create device with id: deviceID, named: $label"
     try {
-        thermostat = addChildDevice("gupta", "Virtual Thermostat", atomicState.deviceID, atomicState.hubID, [label: label, name: label, completedSetup: true])
+        thermostat = addChildDevice("gupta/temperature", "Virtual Thermostat", atomicState.deviceID, atomicState.hubID, [label: label, name: label, completedSetup: true])
     } catch(e) {
         log.error("caught exception", e)
     }

@@ -33,7 +33,7 @@ preferences {
         section("Devices") {
         }
         section {
-            app(name: "thermostats", appName: "Virtual Thermostat Controller", namespace: "gupta", title: "New Thermostat", multiple: true)
+            app(name: "thermostats", appName: "Virtual Thermostat Controller", namespace: "gupta/temperature", title: "New Thermostat", multiple: true)
         }
 		remove("Delete Thermostat(s)", "Are you sure?", "This will delete all Thermostat(s). Cannot be undone.")
     }

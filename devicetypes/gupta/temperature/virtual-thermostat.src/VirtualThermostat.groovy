@@ -204,7 +204,7 @@ metadata {
             state "cool",	label:'',     action: "cycleModeHeat", nextState: "updating", icon: "st.thermostat.heat", backgroundColor: "#CCCCCC"
             state "auto",	label:'',     action: "cycleModeHeat", nextState: "updating", icon: "st.thermostat.heat", backgroundColor: "#CCCCCC"
             state "emergency heat" ,label:'e-heat', icon: "st.thermostat.heat", backgroundColor: "#CCCCCC"
-            state "override",label:'STOP', backgroundColor: "#CA3D3D", icon: "https://github.com/sgupta999/GuptaSmartthingsRepository/raw/master/icons/blocked.png"
+            state "override",label:'', backgroundColor: "#CA3D3D", icon: "https://github.com/sgupta999/GuptaSmartthingsRepository/raw/master/icons/blocked.png"
             state "updating",label: "Working"
         }
 		
@@ -214,7 +214,7 @@ metadata {
             state "heat",label:'',           action: "cycleModeCool", nextState: "updating",  icon: "st.thermostat.cool", backgroundColor: "#CCCCCC"
             state "auto",label:'',           action: "cycleModeCool", nextState: "updating", icon: "st.thermostat.cool", backgroundColor: "#CCCCCC"
             state "emergency heat" ,label:'e-heat', icon: "st.thermostat.heat", backgroundColor: "#CCCCCC"
-            state "override",label:'STOP', backgroundColor: "#CA3D3D", icon: "https://github.com/sgupta999/GuptaSmartthingsRepository/raw/master/icons/blocked.png"
+            state "override",label:'', backgroundColor: "#CA3D3D", icon: "https://github.com/sgupta999/GuptaSmartthingsRepository/raw/master/icons/blocked.png"
             state "updating", label: "Working"
         }
         standardTile("auto", "device.thermostatMode", width: 1, height: 1, inactiveLabel: false, decoration: "flat") {
@@ -223,7 +223,7 @@ metadata {
             state "heat",label:'',            action: "cycleModeAuto", nextState: "updating", icon: "st.thermostat.auto", backgroundColor: "#CCCCCC"
             state "cool",label:'',            action: "cycleModeAuto", nextState: "updating", icon: "st.thermostat.auto", backgroundColor: "#CCCCCC"
             state "emergency heat" ,label:'e-heat', icon: "st.thermostat.heat", backgroundColor: "#CCCCCC"
-            state "override",label:'STOP', backgroundColor: "#CA3D3D", icon: "https://github.com/sgupta999/GuptaSmartthingsRepository/raw/master/icons/blocked.png"
+            state "override",label:'', backgroundColor: "#CA3D3D", icon: "https://github.com/sgupta999/GuptaSmartthingsRepository/raw/master/icons/blocked.png"
             state "updating", label: "Working"
         }
         standardTile("off", "device.thermostatMode", width: 1, height: 1, inactiveLabel: false, decoration: "flat") {
@@ -232,7 +232,7 @@ metadata {
             state "heat",label:'',            action: "cycleModeOff", nextState: "updating", icon: "st.thermostat.heating-cooling-off", backgroundColor: "#CCCCCC"
             state "cool",label:'',            action: "cycleModeOff", nextState: "updating", icon: "st.thermostat.heating-cooling-off", backgroundColor: "#CCCCCC"
             state "emergency heat" ,label:'e-heat', icon: "st.thermostat.heat", backgroundColor: "#CCCCCC"
-            state "override",label:'OVERRIDE', action: "cycleModeOff", nextState: "updating", icon: "https://github.com/sgupta999/GuptaSmartthingsRepository/raw/master/icons/restart.png", backgroundColor: "#CA3D3D"
+            state "override",label:'', action: "cycleModeOff", nextState: "updating", icon: "https://github.com/sgupta999/GuptaSmartthingsRepository/raw/master/icons/override.png", backgroundColor: "#CA3D3D"
             
             state "updating", label: "Working"
         }
@@ -446,7 +446,7 @@ def cycleModeAuto(){
 }
 
 def cycleModeOff () {
-	getThermostatMode() == MODE.OVERRIDE ? changeState(MODE.RESTORE) : changeState(MODE.OFF)
+	getThermostatMode() == MODE.OVERRIDE ? changeState(MODE.RESTORE) : setThermostatMode(MODE.OFF)
 }
 
 private Boolean isThermostatOff() {
